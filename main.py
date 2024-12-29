@@ -13,7 +13,7 @@ class MainGame:
 
         pygame.init()
         self.screen = pygame.display.set_mode(self.resolution, pygame.RESIZABLE)
-        pygame.display.set_caption("SriRama: Dungeon Adventure")
+        pygame.display.set_caption("SriRama: Dungeon Survivor")
                 
         self.clock = pygame.time.Clock()
         self.last_input_time = 0
