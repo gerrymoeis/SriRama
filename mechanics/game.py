@@ -27,8 +27,6 @@ class Game:
         
         self.shake_intensity = 0
         self.damage_cooldown = 0
-        self.spiritual_bar = 50
-        self.max_spiritual_bar = 100
 
         self.enemy_spawn_time = 2000  # Spawn setiap 2 detik
         self.last_spawn_time = pygame.time.get_ticks()
@@ -88,7 +86,6 @@ class Game:
         ]
 
         self.hp = self.max_hp
-        self.spiritual_bar = 50
         self.all_sprites = self.enemies
         self.shake_intensity = 0
         self.damage_cooldown = 0
@@ -104,19 +101,7 @@ class Game:
         self.clock = pygame.time.Clock()
 
         self.unpause_game()
-
-    def prevent_player_out_of_bounds(self):
-        """Mencegah player keluar dari layar."""
-        for player in self.players:
-            if player.image_rect.left < 0:
-                player.image_rect.left = 0
-            if player.image_rect.right > SCREEN_WIDTH:
-                player.image_rect.right = SCREEN_WIDTH
-            if player.image_rect.top < 0:
-                player.image_rect.top = 0
-            if player.image_rect.bottom > SCREEN_HEIGHT:
-                player.image_rect.bottom = SCREEN_HEIGHT
-    
+   
     def spawn_enemy(self):
         """Spawn enemy secara random dari sisi-sisi batas layar."""
         current_time = pygame.time.get_ticks()
@@ -168,6 +153,15 @@ class Game:
             self.damage_cooldown -= 1
 
         for player in self.players:
+            if player.image_rect.left < 0:
+                player.image_rect.left = 0
+            if player.image_rect.right > SCREEN_WIDTH:
+                player.image_rect.right = SCREEN_WIDTH
+            if player.image_rect.top < 0:
+                player.image_rect.top = 0
+            if player.image_rect.bottom > SCREEN_HEIGHT:
+                player.image_rect.bottom = SCREEN_HEIGHT
+
             for enemy in self.enemies:
                 if player.image_rect.colliderect(enemy.image_rect) and self.damage_cooldown == 0 and not player.invisible:
                     self.hp -= 5
@@ -234,16 +228,12 @@ class Game:
                 if current_time - last_input_time > 50:
                     self.game_over.draw(self.elapsed_time, self.score)
                 self.last_input_time = current_time  # Reset cooldown
-            elif game_state == "WIN":
-                self.ui.draw_message("YOU WIN!", GREEN, SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
-                return
             else:
                 self.screen.blit(self.background, (SCREEN_WIDTH // 2 - self.background.get_width() // 2, SCREEN_HEIGHT // 2 - self.background.get_height() // 2))
 
                 self.elapsed_time = (current_time - self.start_time) // 1000  # Dalam detik
 
                 self.handle_input()
-                self.prevent_player_out_of_bounds()
                 self.check_collisions()
                 
                 self.spawn_enemy()

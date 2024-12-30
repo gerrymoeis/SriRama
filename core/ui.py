@@ -20,10 +20,6 @@ class UI:
         pygame.draw.rect(self.screen, RED, (x, y, bar_width, height))
         # Border
         pygame.draw.rect(self.screen, BLACK, (x, y, width, height), 2)
-   
-    def draw_message(self, message, color, x, y):
-        text = self.font.render(message, True, color)
-        self.screen.blit(text, (x, y))
 
 class StartMenu(UI):
     def __init__(self, screen, asset_manager):
@@ -41,7 +37,7 @@ class StartMenu(UI):
         self.screen.blit(self.background, (SCREEN_WIDTH // 2 - self.background.get_width() // 2, SCREEN_HEIGHT // 2 - self.background.get_height() // 2))
 
         self.font = pygame.font.Font("assets/fonts/main_font.ttf", 40)
-        draw_text(self.screen, "SriRama: Dungeon Adventure", SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2, self.font, color=(255, 255, 255), center=True)
+        draw_text(self.screen, "SriRama: Dungeon Survivor", SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2, self.font, color=(255, 255, 255), center=True)
 
         self.font = pygame.font.Font("assets/fonts/main_font.ttf", self.size)
         for i, option in enumerate(self.options):
